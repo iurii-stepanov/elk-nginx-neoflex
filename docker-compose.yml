@@ -1,38 +1,30 @@
-version: "3"
-
+version: "2"
 services:
-
-  elasticsearch:
-    image: elasticsearch:7.17.0
-    container_name: elasticsearch
-    ports:
-      - 9200:9200
-    expose:
-      - 9200
-
-  kibana:
-    image: kibana:7.17.0
-    container_name: kibana
-    ports:
-      - 5601:5601
-    expose:
-      - 5601
-    links: # Links kibana service to the elasticsearch container
-      - elasticsearch
-    depends_on:
-      - elasticsearch
-    environment: # Defined host configuration
-      - ELASTICSEARCH_HOSTS=http://192.168.56.3:9200
-
   fluentd:
     build: ./fluentd
+    container_name: fluentd
     volumes:
       - ./fluentd/conf:/fluentd/etc
-    links:
-      - elasticsearch
-    container_name: fluentd
     ports:
-      - 24224:24224
-      - 24224:24224/udp
-    depends_on:
-      - elasticsearch
+      - "24224:24224"
+      - "24224:24224/udp"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+    container_name: elasticsearch
+    expose:
+      - 9200
+    ports:
+      - "9200:9200"
+    environment:
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+      discovery.type: "single-node"
+      node.store.allow_mmap: "false"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.6.2
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      discovery.type: "single-node"
