@@ -3,6 +3,6 @@ FROM fluentd:v1.14-1
 USER root
 RUN ["gem", "uninstall", "-I", "elasticsearch"]
 RUN ["gem", "install", "elasticsearch", "-v", "7.17.0"]
-RUN ["sudo", "gem", "install", "fluent-plugin-elasticsearch"]
+RUN ["gem", "install", "fluent-plugin-elasticsearch"]
 COPY ./conf/fluent.conf /fluentd/etc/
 USER fluent
