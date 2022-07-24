@@ -1,2 +1,2 @@
 # efk-nginx-neoflex
-# new change
+кое как я разобрался с пушем на github
