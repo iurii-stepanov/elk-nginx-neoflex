@@ -10,5 +10,5 @@ services:
     logging:
       driver: "fluentd"
       options:
-        fluentd-address: FLUENTD_IP:24224   # docker inspect fluentd
+        fluentd-address: 192.168.56.3:24224
         tag: fluent

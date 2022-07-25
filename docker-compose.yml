@@ -15,8 +15,6 @@ services:
   elasticsearch:
     image: elasticsearch:7.17.0
     container_name: elasticsearch
-    #expose: # Exposes the default port 9200
-    #  - 9200
     ports:
       - 9200:9200
     environment:
